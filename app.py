@@ -2,7 +2,7 @@ from flask import Flask, render_template, jsonify, request
 import json
 from flask_restful import Resource, Api
 
-# from src.goal_manager import GoalManager
+from src.goal_manager import GoalManager
 import src.goal_manager
 import src.goal
 app = Flask(__name__)

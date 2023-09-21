@@ -1,4 +1,4 @@
-from goal import Goal
+from .goal import Goal
 import json
 from flask_restful import Resource
 from flask import jsonify, request
