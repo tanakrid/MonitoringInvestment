@@ -1,2 +1,2 @@
-from . import goal
-from . import goal_manager
+from . import model
+from . import resource
