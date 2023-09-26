@@ -1,5 +1,5 @@
 from ..model.goal import Goal as GoalModel, goal_fields
-from ..util import constant
+from ..util import constant, validate
 
 import json
 from flask_restful import Resource, marshal_with, fields
@@ -16,18 +16,16 @@ class GoalList(Resource):
         return goal_list
     
     def post(self):
-        global count
-        data = json.loads(request.data)
-        tmp = GoalModel(
-            data[constant.goal_name], 
-            data[constant.goal_target], 
-            data[constant.goal_start_date], 
-            data[constant.goal_end_date])
-        tmp.id = count
-        count += 1
-        goal_list[tmp.id] = tmp
-        goal_list_fields[tmp.id] = fields.Nested(goal_fields)
-        return 
+        try:
+            global count
+            data = json.loads(request.data)
+            tmp = validate.validate_input_post_goal(data)
+            tmp.id = count
+            count += 1
+            goal_list[tmp.id] = tmp
+            goal_list_fields[tmp.id] = fields.Nested(goal_fields)
+        except Exception as e:
+            return abort(403, "Invalid input parameter")
     
 class Goal(Resource):
 
@@ -42,16 +40,13 @@ class Goal(Resource):
         try:
             goal_list[int(id)] # for check what this goal is still in goal list
             data = json.loads(request.data)
-            tmp = GoalModel(
-                data[constant.goal_name], 
-                data[constant.goal_target], 
-                data[constant.goal_start_date], 
-                data[constant.goal_end_date])
+            tmp = validate.validate_input_post_goal(data)
             tmp.id = id
             goal_list[int(id)] = tmp
-        except:
+        except KeyError:
             return abort(404)
-        return
+        except Exception:
+            return abort(403, "Invalid input parameter")
     
     def delete(self, id):
         try:
@@ -60,5 +55,3 @@ class Goal(Resource):
             goal_list_fields.pop(int(id))
         except:
             return abort(404)
-        return
-
