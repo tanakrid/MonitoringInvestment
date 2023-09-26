@@ -1,5 +1,5 @@
 from ..model.goal import Goal as GoalModel, goal_fields
-from ..util.constant import constant
+from ..util import constant
 
 import json
 from flask_restful import Resource, marshal_with, fields
@@ -19,10 +19,10 @@ class GoalList(Resource):
         global count
         data = json.loads(request.data)
         tmp = GoalModel(
-            data[constant['goal_name']], 
-            data[constant['goal_target']], 
-            data[constant['goal_start_date']], 
-            data[constant['goal_end_date']])
+            data[constant.goal_name], 
+            data[constant.goal_target], 
+            data[constant.goal_start_date], 
+            data[constant.goal_end_date])
         tmp.id = count
         count += 1
         goal_list[tmp.id] = tmp
@@ -38,10 +38,10 @@ class Goal(Resource):
     def patch(self, id):
         data = json.loads(request.data)
         tmp = GoalModel(
-            data[constant['goal_name']], 
-            data[constant['goal_target']], 
-            data[constant['goal_start_date']], 
-            data[constant['goal_end_date']])
+            data[constant.goal_name], 
+            data[constant.goal_target], 
+            data[constant.goal_start_date], 
+            data[constant.goal_end_date])
         tmp.id = id
         goal_list[int(id)] = tmp
         return
