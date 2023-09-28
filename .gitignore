@@ -48,3 +48,5 @@ instance/
 
 # Dependency directories (e.g., Node modules)
 node_modules/
+
+.coverage
