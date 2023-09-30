@@ -1,4 +1,5 @@
 from project.api.model.goal import Goal
+from project.api.resource.goal_list import goal_list, goal_list_fields, count
 from project import create_app
 import pytest
 
@@ -7,7 +8,7 @@ def new_goal():
     goal = Goal("Retire Funding", 30000000, "1/1/2023", "1/1/2053")
     return goal
 
-@pytest.fixture(scope="module")
+@pytest.fixture(scope="function")
 def project():
     app = create_app()
     app.config.update({
@@ -18,6 +19,7 @@ def project():
     yield app
 
     # clean up / reset resources here
+    
 
 
 @pytest.fixture()
