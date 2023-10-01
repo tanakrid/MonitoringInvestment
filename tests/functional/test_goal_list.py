@@ -1,5 +1,6 @@
 import json
 import project.api.util.constant as constant
+import project.api.util.convert as convert
 
 def test_goal_list_resource_with_post(client):
 
@@ -42,9 +43,7 @@ def test_goal_list_resource_with_get(client):
     """
 
     response = client.get("/goal")
-    response_bytes = response.data
-    response_str = response_bytes.decode('utf-8')  # Decode the bytes to a string
-    response_obj = json.loads(response_str) 
+    response_obj = convert.byte_to_object(response.data)
     assert response.status_code == 200
     assert len(response_obj) == 1
 
@@ -57,9 +56,7 @@ def test_goal_list_resource_with_specify_get(client):
     """
 
     response = client.get("/goal/0")
-    response_bytes = response.data
-    response_str = response_bytes.decode('utf-8')  # Decode the bytes to a string
-    response_obj = json.loads(response_str) 
+    response_obj = convert.byte_to_object(response.data)
     assert response.status_code == 200
     assert response_obj[constant.goal_name] == "Retire Funding"
     assert response_obj[constant.goal_target] == 30000000
@@ -91,9 +88,7 @@ def test_goal_list_resource_with_patch(client):
         "start_date": "1/1/2023",
         "end_date": "1/1/2053"
     })
-    response_bytes = response.data
-    response_str = response_bytes.decode('utf-8')  # Decode the bytes to a string
-    response_obj = json.loads(response_str) 
+    response_obj = convert.byte_to_object(response.data)
     assert response.status_code == 200
     # assert response_obj[constant.goal_name] == "New Retire Funding"
     # assert response_obj[constant.goal_target] == 35000000
@@ -157,8 +152,6 @@ def test_goal_list_resource_with_delete(client):
     """
 
     response = client.delete("/goal/0")
-    response_bytes = response.data
-    response_str = response_bytes.decode('utf-8')  # Decode the bytes to a string
-    response_obj = json.loads(response_str) 
+    response_obj = convert.byte_to_object(response.data)
     assert response.status_code == 200
     assert response_obj == None
