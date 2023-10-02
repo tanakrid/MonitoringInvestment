@@ -2,3 +2,5 @@ flask
 flask-restful
 pytest
 pytest-cov
+psycopg2
+sqlalchemy
