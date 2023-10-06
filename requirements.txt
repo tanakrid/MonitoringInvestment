@@ -2,6 +2,6 @@ flask
 flask-restful
 pytest
 pytest-cov
-psycopg2
 sqlalchemy
 mysql-connector-python
+pymysql
