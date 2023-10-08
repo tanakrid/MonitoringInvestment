@@ -2,6 +2,10 @@ flask
 flask-restful
 pytest
 pytest-cov
+coverage
 sqlalchemy
 mysql-connector-python
 pymysql
+Alembic
+flask_sqlalchemy
+flask_migrate

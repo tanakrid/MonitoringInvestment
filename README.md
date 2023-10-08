@@ -59,3 +59,21 @@ The Restful-API for planning and monitoring personal financial. This project is 
     $ docker run --name myadmin -d --link keeplearning:db -p 8081:80 phpmyadmin/phpmyadmin
     ```
     you can access Web GUI Phpmyadmin through http://localhost:8081
+- ## Testing Project
+    #### 1. Run All TestCase
+    ```
+    $ pytest tests/
+    ```
+    #### 2. Run pytest with coverage
+    ```
+    $ coverage run -m pytest
+    ```
+    #### 3. View Coverage Report
+    ```
+    $ coverage report
+    ```
+    #### 4. Generate HTML Coverage Report
+    ```
+    $ coverage html
+    ```
+    An HTML report in the htmlcov/ directory and you can see on browser by open index.html

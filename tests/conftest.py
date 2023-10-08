@@ -1,3 +1,7 @@
+import os
+import sys
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 from project.api.model.goal import Goal
 from project.api.resource.goal_list import goal_list, goal_list_fields, count
 from project import create_app
@@ -16,8 +20,8 @@ def project():
     })
 
     # other setup can go here
-    yield app
-
+    # yield app
+    return app
     # clean up / reset resources here
     
 
