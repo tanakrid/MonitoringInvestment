@@ -7,5 +7,6 @@ sqlalchemy
 mysql-connector-python
 pymysql
 Alembic
+cryptography
 flask_sqlalchemy
 flask_migrate

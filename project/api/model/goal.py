@@ -23,7 +23,7 @@ class Goal(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), nullable=False)
     target = db.Column(db.Integer, nullable=False)
-    start_date = db.Column(db.String(120), unique=True, nullable=False)
-    end_date = db.Column(db.String(120), unique=True, nullable=False)
-    progress = db.Column(db.Double, unique=True, nullable=False)
+    start_date = db.Column(db.String(120), nullable=False)
+    end_date = db.Column(db.String(120), nullable=False)
+    progress = db.Column(db.Float, nullable=False)
     
