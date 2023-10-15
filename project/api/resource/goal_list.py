@@ -1,57 +1,69 @@
-from ..model.goal import Goal as GoalModel, goal_fields
-from ..util import constant, validate
+from project.api.model.goal import Goal as GoalModel, goal_fields
+from project import db
+from project.api.util import validate
 
-import json
-from flask_restful import Resource, marshal_with, fields
-from flask import jsonify, request, abort
+from flask_restful import Resource, marshal_with, reqparse
+from flask import abort
 
-goal_list = {}
-goal_list_fields = {}
-count = 0
+parser = reqparse.RequestParser()
+parser.add_argument('name', type=str, required=True)
+parser.add_argument('target', type=int, required=True)
+parser.add_argument('start_date', type=str, required=True)
+parser.add_argument('end_date', type=str, required=True)
 
 class GoalList(Resource):
 
-    @marshal_with(goal_list_fields)
+    @marshal_with(goal_fields)
     def get(self):
-        return goal_list
+        return GoalModel.query.all()
     
+    @marshal_with(goal_fields)
     def post(self):
+        args = parser.parse_args()
+        goal = None
         try:
-            global count
-            data = json.loads(request.data)
-            tmp = validate.validate_input_post_goal(data)
-            tmp.id = count
-            count += 1
-            goal_list[tmp.id] = tmp
-            goal_list_fields[tmp.id] = fields.Nested(goal_fields)
-        except Exception as e:
+            goal = validate.validate_input_post_goal(args)
+        except Exception:
             return abort(403, "Invalid input parameter")
+        db.session.add(goal)
+        db.session.commit()
+        return goal
     
 class Goal(Resource):
 
     @marshal_with(goal_fields)
     def get(self, id):
-        try:
-            return goal_list[int(id)]
-        except:
+        goal = GoalModel.query.get(id)
+        if not goal:
             return abort(404)
+        return goal
     
+    @marshal_with(goal_fields)
     def patch(self, id):
+        args = parser.parse_args()
+        goal = GoalModel.query.filter_by(id=id).first()
+        if not goal:
+            return abort(404, 'Goal not found!')
         try:
-            goal_list[int(id)] # for check what this goal is still in goal list
-            data = json.loads(request.data)
-            tmp = validate.validate_input_post_goal(data)
-            tmp.id = id
-            goal_list[int(id)] = tmp
-        except KeyError:
-            return abort(404)
+            tmp = validate.validate_input_post_goal(args)
+
+            # bind data from args to existing data
+            goal.id = id
+            goal.name = tmp.name
+            goal.target = tmp.target
+            goal.start_date = tmp.start_date
+            goal.end_date = tmp.end_date
+            goal.progress = tmp.progress
+
+            db.session.commit()
         except Exception:
             return abort(403, "Invalid input parameter")
+        return goal
     
+    @marshal_with(goal_fields)
     def delete(self, id):
-        try:
-            goal_list[int(id)] # for check what this goal is still in goal list
-            goal_list.pop(int(id))
-            goal_list_fields.pop(int(id))
-        except:
-            return abort(404)
+        goal = GoalModel.query.get(id)
+        if not goal:
+            return abort(404, 'Goal not found!')
+        db.session.delete(goal)
+        db.session.commit()
