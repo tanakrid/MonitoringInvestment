@@ -77,3 +77,12 @@ The Restful-API for planning and monitoring personal financial. This project is 
     $ coverage html
     ```
     An HTML report in the htmlcov/ directory and you can see on browser by open index.html
+- ## Migration Database
+    #### 1. Run command to create migration script that record changing for each version
+    ```
+    $ alembic revision -m "version message"
+    ```
+    #### 2. Apply the Migration
+    ```
+    $ alembic upgrade head
+    ```
