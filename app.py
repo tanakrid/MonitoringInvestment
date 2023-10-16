@@ -1,5 +1,4 @@
 from project import create_app
-import config
 import os
 import sys
 

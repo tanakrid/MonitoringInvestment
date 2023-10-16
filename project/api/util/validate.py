@@ -1,5 +1,5 @@
 from . import constant
-from ..model.goal import Goal as GoalModel
+from project.api.model.goal import Goal as GoalModel
 
 def validate_input_post_goal(args):
 

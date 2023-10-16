@@ -33,7 +33,7 @@ class Goal(Resource):
 
     @marshal_with(goal_fields)
     def get(self, id):
-        goal = GoalModel.query.get(id)
+        goal = GoalModel.query.filter_by(id=id).first()
         if not goal:
             return abort(404)
         return goal
@@ -62,7 +62,7 @@ class Goal(Resource):
     
     @marshal_with(goal_fields)
     def delete(self, id):
-        goal = GoalModel.query.get(id)
+        goal = GoalModel.query.filter_by(id=id).first()
         if not goal:
             return abort(404, 'Goal not found!')
         db.session.delete(goal)
