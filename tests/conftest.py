@@ -13,11 +13,11 @@ import pytest
 
 @pytest.fixture
 def project():
-    app = create_app()
-    app.config.update({
+    parameter = {
         "TESTING": True,
         "SQLALCHEMY_DATABASE_URI": config.SQLALCHEMY_DATABASE_URI_TEST
-    })
+    }
+    app = create_app(parameter)
 
     with app.app_context():
         # db.create_all()

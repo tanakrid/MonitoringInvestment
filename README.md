@@ -35,12 +35,12 @@ The Restful-API for planning and monitoring personal financial. This project is 
     ```
     #### 2. Setup MySQL server instance
     ```
-    $ docker run --name=keeplearning -e MYSQL_ROOT_PASSWORD=keep1234 -e MYSQL_DATABASE=keeplearning -p 3306:3306 -d mysql
+    $ docker run --name=keeplearning -e MYSQL_ROOT_PASSWORD=keep1234 -e MYSQL_DATABASE=PFM -p 3306:3306 -d mysql
     ```
     #### 3. Shell to MySQL Container
     ```
-    $ docker exec -it keeplearning bash
-    root@keeplearning:/# mysql -u root -p
+    $ docker exec -it PFM bash
+    root@PFM:/# mysql -u root -p
     ```
     #### 4. Bind user connection
     ```
@@ -56,9 +56,13 @@ The Restful-API for planning and monitoring personal financial. This project is 
     ```
     #### 7. Setup Phpmyadmin 
     ```
-    $ docker run --name myadmin -d --link keeplearning:db -p 8081:80 phpmyadmin/phpmyadmin
+    $ docker run --name myadmin -d --link PFM:db -p 8081:80 phpmyadmin/phpmyadmin
     ```
     you can access Web GUI Phpmyadmin through http://localhost:8081
+    #### 8. Manual create database for test from migration version
+    - Walkthrough GUI Phpmyadmin to create new database
+    - In alembic.ini file change attribute 'sqlalchemy.url' to point the new one
+    - Apply the migration
 - ## Testing Project
     #### 1. Run All TestCase
     ```

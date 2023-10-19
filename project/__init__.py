@@ -7,9 +7,9 @@ db = SQLAlchemy()
 migrate = None
 Base = None
 
-def create_app():
+def create_app(parameter):
     app = Flask(__name__)
-    app.config['SQLALCHEMY_DATABASE_URI'] = config.SQLALCHEMY_DATABASE_URI
+    app.config.update(parameter)
 
     db.init_app(app)
 
@@ -22,5 +22,4 @@ def setResource(api_resource):
     api_resource.add_resource(GoalList, '/goal')
     api_resource.add_resource(Goal, '/goal/<id>')
 
-import config
 from . import api
