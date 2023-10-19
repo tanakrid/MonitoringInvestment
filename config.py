@@ -1,8 +1,10 @@
 DB_HOST = 'localhost'
 DB_PORT = '3306'
 DB_NAME = 'keeplearning'
+DB_NAME_TEST = 'PFM_TEST'
 DB_USER = 'root'
 DB_PASSWORD = 'keep1234'
 DB_ECHO_MODE = True
 
 SQLALCHEMY_DATABASE_URI = f'mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
+SQLALCHEMY_DATABASE_URI_TEST = f'mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME_TEST}'

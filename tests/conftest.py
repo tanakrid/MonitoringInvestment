@@ -2,31 +2,31 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from project.api.model.goal import Goal
-from project.api.resource.goal_list import goal_list, goal_list_fields, count
 from project import create_app
+import config
 import pytest
 
-@pytest.fixture(scope="module")
-def new_goal():
-    goal = Goal("Retire Funding", 30000000, "1/1/2023", "1/1/2053")
-    return goal
+# @pytest.fixture(scope="module")
+# def new_goal():
+#     goal = Goal("Retire Funding", 30000000, "1/1/2023", "1/1/2053")
+#     return goal
 
-@pytest.fixture(scope="function")
+@pytest.fixture
 def project():
     app = create_app()
     app.config.update({
         "TESTING": True,
+        "SQLALCHEMY_DATABASE_URI": config.SQLALCHEMY_DATABASE_URI_TEST
     })
 
-    # other setup can go here
-    # yield app
-    return app
-    # clean up / reset resources here
+    with app.app_context():
+        # db.create_all()
+        yield app
+        # db.drop_all()
     
 
 
-@pytest.fixture()
+@pytest.fixture
 def client(project):
 
     with project.test_client() as testing_client:
