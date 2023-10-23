@@ -10,3 +10,4 @@ Alembic
 cryptography
 flask_sqlalchemy
 flask_migrate
+Flask-JWT-Extended
