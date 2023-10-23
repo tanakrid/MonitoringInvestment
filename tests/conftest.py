@@ -15,7 +15,8 @@ import pytest
 def project():
     parameter = {
         "TESTING": True,
-        "SQLALCHEMY_DATABASE_URI": config.SQLALCHEMY_DATABASE_URI_TEST
+        "SQLALCHEMY_DATABASE_URI": config.SQLALCHEMY_DATABASE_URI_TEST,
+        'JWT_SECRET_KEY': config.JWT_SECRET_KEY
     }
     app = create_app(parameter)
 
