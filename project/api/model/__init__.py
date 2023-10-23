@@ -1,1 +1,1 @@
-from . import goal
+from . import *

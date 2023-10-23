@@ -10,7 +10,8 @@ sys.path.insert(0, root_dir)
 
 import config
 parameter = {
-    "SQLALCHEMY_DATABASE_URI": config.SQLALCHEMY_DATABASE_URI
+    "SQLALCHEMY_DATABASE_URI": config.SQLALCHEMY_DATABASE_URI,
+    'JWT_SECRET_KEY': config.JWT_SECRET_KEY
 }
 app = create_app(parameter)
 
