@@ -1,7 +1,6 @@
-from flask_jwt_extended import create_access_token
 from project.api.model.user import User
 from flask_restful import Resource, reqparse
-from flask_jwt_extended import jwt_required, get_jwt_identity
+from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, get_jwt
 import project.api.util.constant as constant
 from project import db
 
@@ -11,7 +10,7 @@ def authenticate(username, password):
         return user
 
 def identity(payload):
-    user_id = payload['identity']
+    user_id = payload
     return User.query.filter_by(id=user_id).first()
 
 parser = reqparse.RequestParser()
@@ -44,10 +43,19 @@ class Login(Resource):
             return {'access_token': access_token}, 200
         else:
             return {'message': 'Invalid credentials'}, 401
+        
+blacklist = set()
+class Logout(Resource):
+    @jwt_required
+    def post(self):
+        jti = get_jwt()["jti"]
+        blacklist.add(jti)
+        return {"msg": "Successfully logged out"}
 
 class ProtectedResource(Resource):
     @jwt_required()
     def get(self):
+        print(get_jwt_identity())
         current_user = identity(get_jwt_identity())
         return {'id': current_user.id, 'username': current_user.username}, 200
 

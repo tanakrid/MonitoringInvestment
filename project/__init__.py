@@ -24,9 +24,10 @@ def setResource(api_resource):
     api_resource.add_resource(GoalList, '/goal')
     api_resource.add_resource(Goal, '/goal/<id>')
 
-    from project.api.resource.login import Register, Login, ProtectedResource
+    from project.api.resource.login import Register, Login, ProtectedResource, Logout
     api_resource.add_resource(Register, '/register')
     api_resource.add_resource(Login, '/login')
     api_resource.add_resource(ProtectedResource, '/protected_resource')
+    api_resource.add_resource(Logout, '/logout')
 
 from . import api
