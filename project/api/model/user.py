@@ -1,5 +1,8 @@
 from flask_restful import fields
+from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy.orm import declarative_base, relationship
 from project import db
+
 
 user_fields = {
     'id': fields.String,
@@ -7,11 +10,14 @@ user_fields = {
     'password': fields.String,
     'role': fields.String
 }
+Base = declarative_base()
+class User(Base, db.Model):
+    __tablename__ = 'users'
 
-class User(db.Model):
-
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True, nullable=False)
-    password = db.Column(db.String(120), nullable=False)
-    role = db.Column(db.String(80), nullable=False)
+    id = Column(Integer, primary_key=True)
+    username = Column(String(80), unique=True, nullable=False)
+    password = Column(String(120), nullable=False)
+    role = Column(String(80), nullable=False)
+    # cashFlowStatements = relationship("CashFlowStatement", back_populates="user")
+    goals = relationship("Goal", back_populates="user")
     
