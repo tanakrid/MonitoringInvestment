@@ -21,6 +21,7 @@ class User(Base, db.Model):
     create_date = Column(String(120), nullable=False)
     update_date = Column(String(120))
     del_date = Column(String(120))
-    # cashFlowStatements = relationship("CashFlowStatement", back_populates="user")
+    
+    cashFlowStatements = relationship("CashFlowStatement", back_populates="user")
     goals = relationship("Goal", back_populates="user")
     
