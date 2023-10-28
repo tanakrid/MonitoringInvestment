@@ -18,6 +18,9 @@ class User(Base, db.Model):
     username = Column(String(80), unique=True, nullable=False)
     password = Column(String(120), nullable=False)
     role = Column(String(80), nullable=False)
+    create_date = Column(String(120), nullable=False)
+    update_date = Column(String(120))
+    del_date = Column(String(120))
     # cashFlowStatements = relationship("CashFlowStatement", back_populates="user")
     goals = relationship("Goal", back_populates="user")
     

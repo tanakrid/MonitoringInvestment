@@ -21,6 +21,10 @@ class Goal(Base, db.Model):
     start_date = Column(String(120), nullable=False)
     end_date = Column(String(120), nullable=False)
     progress = Column(Float, nullable=False)
+    create_date = Column(String(120), nullable=False)
+    update_date = Column(String(120))
+    del_date = Column(String(120))
+
     user_id = Column(Integer, ForeignKey('users.id'))
     user = relationship("User", back_populates="goals")
     
