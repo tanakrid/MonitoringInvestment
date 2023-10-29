@@ -8,6 +8,9 @@ user_fields = {
     'id': fields.String,
     'username': fields.String,
     'password': fields.String,
+    'create_date': fields.String,
+    'update_date': fields.String,
+    'del_date': fields.String,
     'role': fields.String
 }
 Base = declarative_base()
@@ -22,6 +25,6 @@ class User(Base, db.Model):
     update_date = Column(String(120))
     del_date = Column(String(120))
     
-    cashFlowStatements = relationship("CashFlowStatement", back_populates="user")
-    goals = relationship("Goal", back_populates="user")
+    cash_flow_statement = relationship("CashFlowStatement", back_populates="User")
+    goal = relationship("Goal", back_populates="User")
     

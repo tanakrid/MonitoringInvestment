@@ -19,13 +19,13 @@ depends_on: Union[str, Sequence[str], None] = None
 
 
 def upgrade() -> None:
-    op.create_table('CashFlowStatements',
+    op.create_table('cash_flow_statements',
     sa.Column('id', sa.INTEGER, autoincrement=True, nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('create_date', sa.String(length=120), nullable=False),
     sa.Column('update_date', sa.String(length=120), nullable=True),
     sa.Column('del_date', sa.String(length=120), nullable=True),
-    sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
+    sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id'),
     mysql_collate='utf8mb4_0900_ai_ci',
     mysql_default_charset='utf8mb4',
