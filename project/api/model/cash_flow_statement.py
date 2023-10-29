@@ -12,7 +12,7 @@ cash_flow_statement_fields = {
 }
 Base = declarative_base()
 class CashFlowStatement(Base, db.Model):
-    __tablename__ = 'CashFlowStatements'
+    __tablename__ = 'cash_flow_statements'
 
     id = Column(Integer, primary_key=True)
     create_date = Column(String(120), nullable=False)
@@ -21,4 +21,5 @@ class CashFlowStatement(Base, db.Model):
 
     user_id = Column(Integer, ForeignKey('users.id'))
     user = relationship("User", back_populates="CashFlowStatements")
+    transaction = relationship("Transaction", back_populates="CashFlowStatement")
     
