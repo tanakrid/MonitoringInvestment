@@ -2,11 +2,12 @@ from flask import Flask
 from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager
+from sqlalchemy.orm import declarative_base
 
 db = SQLAlchemy()
 jwt = JWTManager()
 migrate = None
-Base = None
+Base = declarative_base()
 
 def create_app(parameter):
     app = Flask(__name__)

@@ -1,15 +1,17 @@
 from project.api.model.goal import Goal as GoalModel, goal_fields
 from project import db
-from project.api.util import validate
+from project.api.controller import goal as GoalController
 
 from flask_restful import Resource, marshal_with, reqparse
 from flask import abort
+import traceback 
 
 parser = reqparse.RequestParser()
 parser.add_argument('name', type=str, required=True)
 parser.add_argument('target', type=int, required=True)
 parser.add_argument('start_date', type=str, required=True)
 parser.add_argument('end_date', type=str, required=True)
+parser.add_argument('user_id', type=str, required=True)
 
 class GoalList(Resource):
 
@@ -22,8 +24,9 @@ class GoalList(Resource):
         args = parser.parse_args()
         goal = None
         try:
-            goal = validate.validate_input_post_goal(args)
+            goal = GoalController.validate_input_post_goal(args)
         except Exception:
+            traceback.print_exc() 
             return abort(403, "Invalid input parameter")
         db.session.add(goal)
         db.session.commit()
@@ -45,7 +48,7 @@ class Goal(Resource):
         if not goal:
             return abort(404, 'Goal not found!')
         try:
-            tmp = validate.validate_input_post_goal(args)
+            tmp = GoalController.validate_input_post_goal(args)
 
             # bind data from args to existing data
             goal.id = id

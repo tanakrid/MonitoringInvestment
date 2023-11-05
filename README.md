@@ -90,3 +90,5 @@ The Restful-API for planning and monitoring personal financial. This project is 
     ```
     $ alembic upgrade head
     ```
+- ## Note for Development
+    - when have to define relationship between two tables, in the class model you must to declare variable that represent to another pair relationship table like user with goal table have the relationship to be one to many relatively. in relationship variable is assigned with relationship() function in format ({related class name}, back_populates={relationship variable name})

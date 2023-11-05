@@ -1,7 +1,7 @@
 from flask_restful import fields
-from project import db
+from project import db, Base
 from sqlalchemy import Column, Integer, String, ForeignKey, Float
-from sqlalchemy.orm import declarative_base, relationship
+from sqlalchemy.orm import relationship
 
 goal_fields = {
     'id': fields.Integer,
@@ -12,9 +12,10 @@ goal_fields = {
     'create_date': fields.String,
     'update_date': fields.String,
     'del_date': fields.String,
-    'progress': fields.Float
+    'progress': fields.Float,
+    'user_id': fields.Integer
 }
-Base = declarative_base()
+
 class Goal(Base, db.Model):
     __tablename__ = 'goals'
 
@@ -29,5 +30,5 @@ class Goal(Base, db.Model):
     del_date = Column(String(120))
 
     user_id = Column(Integer, ForeignKey('users.id'))
-    user = relationship("User", back_populates="Goals")
+    user = relationship("User", back_populates="goals")
     
