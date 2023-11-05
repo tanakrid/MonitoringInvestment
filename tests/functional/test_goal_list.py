@@ -1,6 +1,7 @@
 import project.api.util.constant as constant
 from project import db
 from project.api.model.goal import Goal
+from project.api.controller import goal as GoalController
 
 def test_goal_list_resource_with_post(client):
 
@@ -14,7 +15,8 @@ def test_goal_list_resource_with_post(client):
         "name": "Retire Funding",
         "target": 30000000,
         "start_date": "1/1/2023",
-        "end_date": "1/1/2023"
+        "end_date": "1/1/2023",
+        "user_id": 1
     })
     assert response.status_code == 200
     assert response.json[constant.goal_name] == 'Retire Funding'
@@ -35,7 +37,8 @@ def test_goal_list_resource_with_wrong_data_post(client):
         "name": "Retire Funding",
         "target": -30000000,
         "start_date": "1/1/2023",
-        "end_date": "1/1/2053"
+        "end_date": "1/1/2053",
+        "user_id": 1
     })
     assert response.status_code == 403
 
@@ -58,7 +61,14 @@ def test_goal_list_resource_with_specify_get(client):
     WHEN the '/goal/1' is requested (GET)
     THEN check that the response is valid
     """
-    goal = Goal(name='Retire Funding', target=30000000, start_date='1/1/2023', end_date='1/1/2023', progress=0)
+    input = {
+        "name": "Retire Funding",
+        "target": 30000000,
+        "start_date": "1/1/2023",
+        "end_date": "1/1/2023",
+        "user_id": 1
+    }
+    goal = GoalController.validate_input_post_goal(input)
     db.session.add(goal)
     db.session.commit()
 
@@ -88,7 +98,14 @@ def test_goal_list_resource_with_patch(client):
     WHEN the '/goal/1' is requested (PATCH)
     THEN check that the response is valid and some attribute is modified
     """
-    goal = Goal(name='Retire Funding', target=30000000, start_date='1/1/2023', end_date='1/1/2023', progress=0)
+    input = {
+        "name": "Retire Funding",
+        "target": 30000000,
+        "start_date": "1/1/2023",
+        "end_date": "1/1/2023",
+        "user_id": 1
+    }
+    goal = GoalController.validate_input_post_goal(input)
     db.session.add(goal)
     db.session.commit()
 
@@ -96,7 +113,8 @@ def test_goal_list_resource_with_patch(client):
         "name": "New Retire Funding",
         "target": 35000000,
         "start_date": "1/1/2023",
-        "end_date": "1/1/2023"
+        "end_date": "1/1/2023",
+        "user_id": 1
     })
     assert response.status_code == 200
     assert response.json[constant.goal_name] == 'New Retire Funding'
@@ -112,7 +130,14 @@ def test_goal_list_resource_with_wrong_data_patch(client):
     WHEN the '/goal/1' is requested (PATCH) with wrong data
     THEN check that the response is valid
     """
-    goal = Goal(name='Retire Funding', target=30000000, start_date='1/1/2023', end_date='1/1/2023', progress=0)
+    input = {
+            "name": "Retire Funding",
+            "target": 30000000,
+            "start_date": "1/1/2023",
+            "end_date": "1/1/2023",
+            "user_id": 1
+        }
+    goal = GoalController.validate_input_post_goal(input)
     db.session.add(goal)
     db.session.commit()
 
@@ -120,7 +145,8 @@ def test_goal_list_resource_with_wrong_data_patch(client):
         "name": "New Retire Funding",
         "target": -30000000,
         "start_date": "1/1/2023",
-        "end_date": "1/1/2053"
+        "end_date": "1/1/2053",
+        "user_id": 1
     })
     assert response.status_code == 403
 
@@ -131,7 +157,14 @@ def test_goal_list_resource_with_patch_case_can_not_find_index(client):
     WHEN the '/goal/10' is requested (PATCH) with wrong data
     THEN check that the response is valid
     """
-    goal = Goal(name='Retire Funding', target=30000000, start_date='1/1/2023', end_date='1/1/2023', progress=0)
+    input = {
+        "name": "Retire Funding",
+        "target": 30000000,
+        "start_date": "1/1/2023",
+        "end_date": "1/1/2023",
+        "user_id": 1
+    }
+    goal = GoalController.validate_input_post_goal(input)
     db.session.add(goal)
     db.session.commit()
 
@@ -139,7 +172,8 @@ def test_goal_list_resource_with_patch_case_can_not_find_index(client):
         "name": "New Retire Funding",
         "target": 30000000,
         "start_date": "1/1/2023",
-        "end_date": "1/1/2053"
+        "end_date": "1/1/2053",
+        "user_id": 1
     })
     assert response.status_code == 404
 
@@ -150,7 +184,14 @@ def test_goal_list_resource_with_delete_case_can_not_find_index(client):
     WHEN the '/goal/10' is requested (PATCH) with wrong data
     THEN check that the response is valid
     """
-    goal = Goal(name='Retire Funding', target=30000000, start_date='1/1/2023', end_date='1/1/2023', progress=0)
+    input = {
+        "name": "Retire Funding",
+        "target": 30000000,
+        "start_date": "1/1/2023",
+        "end_date": "1/1/2023",
+        "user_id": 1
+    }
+    goal = GoalController.validate_input_post_goal(input)
     db.session.add(goal)
     db.session.commit()
 
@@ -158,7 +199,8 @@ def test_goal_list_resource_with_delete_case_can_not_find_index(client):
         "name": "New Retire Funding",
         "target": 35000000,
         "start_date": "1/1/2023",
-        "end_date": "1/1/2053"
+        "end_date": "1/1/2053",
+        "user_id": 1
     })
     assert response.status_code == 404
 
@@ -169,7 +211,14 @@ def test_goal_list_resource_with_delete(client):
     WHEN the '/goal/1' is requested (DELETE)
     THEN check that the response is valid
     """
-    goal = Goal(name='Retire Funding', target=30000000, start_date='1/1/2023', end_date='1/1/2023', progress=0)
+    input = {
+        "name": "Retire Funding",
+        "target": 30000000,
+        "start_date": "1/1/2023",
+        "end_date": "1/1/2023",
+        "user_id": 1
+    }
+    goal = GoalController.validate_input_post_goal(input)
     db.session.add(goal)
     db.session.commit()
 
