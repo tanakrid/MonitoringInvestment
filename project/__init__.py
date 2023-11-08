@@ -31,4 +31,8 @@ def setResource(api_resource):
     api_resource.add_resource(ProtectedResource, '/protected_resource')
     api_resource.add_resource(Logout, '/logout')
 
+    from project.api.resource.cash_flow_statement import CashFlowStatementlList, CashFlowStatement
+    api_resource.add_resource(CashFlowStatementlList, '/cash_flow_statement')
+    api_resource.add_resource(CashFlowStatement, '/cash_flow_statement/<id>')
+
 from . import api

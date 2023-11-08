@@ -5,7 +5,7 @@ from sqlalchemy.orm import relationship
 
 cash_flow_statement_fields = {
     'id': fields.Integer,
-    'user_id': fields.Integer,
+    'user_id': fields.Integer, 
     'create_date': fields.String,
     'update_date': fields.String,
     'del_date': fields.String
@@ -21,5 +21,5 @@ class CashFlowStatement(Base, db.Model):
 
     user_id = Column(Integer, ForeignKey('users.id'))
     user = relationship("User", back_populates="cash_flow_statements")
-    transactions = relationship("Transaction", back_populates="cash_flow_statement")
+    # transactions = relationship("Transaction", back_populates="cash_flow_statement")
     

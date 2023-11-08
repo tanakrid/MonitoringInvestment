@@ -9,3 +9,5 @@ login_username = 'username'
 login_password = 'password'
 login_role = 'role'
 login_role_normal = 'normal'
+
+cash_flow_statement_create_date = 'create_date'
